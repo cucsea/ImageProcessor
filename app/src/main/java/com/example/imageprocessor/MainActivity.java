@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "permission denied", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            default: ;
+            default:
         }
     }
 
@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             default:
-
         }
 
     }

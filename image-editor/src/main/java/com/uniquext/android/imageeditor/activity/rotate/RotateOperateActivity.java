@@ -27,11 +27,11 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
     /**
      * 左转
      */
-    //private AppCompatImageView mIvRotateLeft;
+    private AppCompatImageView mIvRotateLeft;
     /**
      * 右转
      */
-    //private AppCompatImageView mIvRotateRight;
+    private AppCompatImageView mIvRotateRight;
 
     /**
      * 旋转
@@ -61,8 +61,8 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
     @Override
     protected void initView() {
         mRotateView = findViewById(R.id.view_image_rotate);
-        //mIvRotateLeft = findViewById(R.id.iv_rotate_left);//左右
-        //mIvRotateRight = findViewById(R.id.iv_rotate_right);
+        mIvRotateLeft = findViewById(R.id.iv_rotate_left);//左右
+        mIvRotateRight = findViewById(R.id.iv_rotate_right);
         mSeekRotateAngle = findViewById(R.id.seek_bar_angle);
         mIvCancel = findViewById(R.id.iv_cancel);
         mIvConfirm = findViewById(R.id.iv_confirm);
@@ -75,8 +75,8 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
 
     @Override
     protected void initEvent() {
-        //mIvRotateLeft.setOnClickListener(v -> mPresenter.left());
-        //mIvRotateRight.setOnClickListener(v -> mPresenter.right());
+        mIvRotateLeft.setOnClickListener(v -> mPresenter.left());
+        mIvRotateRight.setOnClickListener(v -> mPresenter.right());
         mIvCancel.setOnClickListener(v -> mPresenter.cancel());
         mIvConfirm.setOnClickListener(v -> mPresenter.confirm(mRotateView.getImageBitmap()));
 

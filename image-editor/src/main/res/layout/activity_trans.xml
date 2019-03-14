@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,12 +22,12 @@
     <View
         android:id="@+id/view_action_bar"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="97dp"
         android:background="@color/nav_bar"
         app:layout_constraintBottom_toTopOf="@+id/view_dividing" />
 
-    <com.uniquext.android.imageeditor.widget.RotateImageView
-        android:id="@+id/view_image_rotate"
+    <com.uniquext.android.imageeditor.widget.TransView
+        android:id="@+id/view_image_trans"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/image_background"
@@ -35,73 +36,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_rotate_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:src="@mipmap/icon_rotate_left"
-        app:layout_constraintBottom_toBottomOf="@+id/view_action_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_action_bar" />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_rotate_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:src="@mipmap/icon_rotate_right"
-        app:layout_constraintBottom_toBottomOf="@+id/view_action_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_action_bar" />
+
     <TextView
-        android:id="@+id/rotate_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="@string/percent_empty"
+        android:text="@string/trans_rank"
         android:textColor="@color/text_default_color"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/view_action_bar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_action_bar" />
+        app:layout_constraintTop_toTopOf="@+id/view_action_bar"
+        app:layout_constraintVertical_bias="0.5" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/rotate_end"
+    <TextView
+        android:id="@+id/tv_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:text="@string/percent_full"
         android:textColor="@color/text_default_color"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/view_action_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_action_bar" />
+        app:layout_constraintTop_toTopOf="@+id/view_action_bar"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="100%" />
+
     <SeekBar
-        android:id="@+id/seek_bar_angle"
+        android:id="@+id/seek_bar_rate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
         android:maxHeight="2dp"
         android:progressDrawable="@drawable/seek_bar_progress"
         android:thumb="@drawable/seek_thumb"
         app:layout_constraintBottom_toBottomOf="@+id/view_action_bar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_action_bar" />
-
+        app:layout_constraintTop_toTopOf="@+id/view_action_bar"
+        app:layout_constraintVertical_bias="0.5" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/iv_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:padding="17dp"
+        android:padding="15dp"
         android:src="@mipmap/icon_cancel"
         app:layout_constraintBottom_toBottomOf="@+id/view_nav_bar"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
-        android:padding="17dp"
+        android:padding="15dp"
         android:src="@mipmap/icon_confirm"
         app:layout_constraintBottom_toBottomOf="@+id/view_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="@string/rotate"
+        android:text="@string/trans_rank"
         android:textColor="@color/text_default_color"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/view_nav_bar"
