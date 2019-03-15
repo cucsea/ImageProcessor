@@ -159,7 +159,7 @@
         android:drawableTop="@mipmap/icon_trim"
         android:gravity="center"
         android:padding="10dp"
-        android:text="透明度"
+        android:text="@string/trans_rank"
         android:textColor="@color/text_default_color"
         app:layout_constraintBottom_toBottomOf="@+id/view_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"

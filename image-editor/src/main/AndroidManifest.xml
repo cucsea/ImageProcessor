@@ -55,6 +55,19 @@
         </activity>
 
         <activity
+            android:name=".activity.trans.TransOperateActivity"
+            android:theme="@style/ImageEditorStyle">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="@string/activity_host"
+                    android:pathPattern="/trans"
+                    android:scheme="@string/activity_scheme" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".activity.characters.CharactersOperateActivity"
             android:theme="@style/ImageEditorStyle">
             <intent-filter>

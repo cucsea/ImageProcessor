@@ -1,4 +1,4 @@
-package com.uniquext.android.imageeditor.activity.transparent;
+package com.uniquext.android.imageeditor.activity.trans;
 
 import android.graphics.Bitmap;
 
@@ -18,7 +18,7 @@ public interface TransContract {
         /**
          * 设置透明度
          *
-         * @param progress 进度
+         * @param progress 透明度值
          */
         void setRate(float progress);
 

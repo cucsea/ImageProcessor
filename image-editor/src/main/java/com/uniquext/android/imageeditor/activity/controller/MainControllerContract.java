@@ -45,6 +45,11 @@ public interface MainControllerContract {
         void showMosaic();
 
         /**
+         * 透明度
+         */
+        void showTrans();
+
+        /**
          * 裁剪
          */
         void showTrim();
@@ -100,6 +105,12 @@ public interface MainControllerContract {
          * 裁剪
          */
         void trim();
+
+        /**
+         * 透明度
+         */
+        void transparent();
+
 
         /**
          * 退出

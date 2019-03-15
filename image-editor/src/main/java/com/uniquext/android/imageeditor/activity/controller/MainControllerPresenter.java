@@ -19,6 +19,11 @@ public class MainControllerPresenter implements MainControllerContract.Presenter
      */
     static final String OPERATE_MOSAIC = "scheme://com.uniquext.image-editor/mosaic";
     /**
+     * 透明度
+     */
+    static final String OPERATE_TRANS = "scheme://com.uniquext.image-editor/trans";
+
+    /**
      * 裁剪
      */
     static final String OPERATE_TRIM = "scheme://com.uniquext.image-editor/trim";
@@ -78,6 +83,11 @@ public class MainControllerPresenter implements MainControllerContract.Presenter
     }
 
     @Override
+    public void transparent() {
+        mContractView.showTrans();
+    }
+
+    @Override
     public void trim() {
         mContractView.showTrim();
     }
@@ -100,4 +110,7 @@ public class MainControllerPresenter implements MainControllerContract.Presenter
     public void recycle() {
         mContractView = null;
     }
+
+
+
 }

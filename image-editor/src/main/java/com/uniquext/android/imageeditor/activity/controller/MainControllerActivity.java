@@ -17,6 +17,7 @@ import static com.uniquext.android.imageeditor.activity.controller.MainControlle
 import static com.uniquext.android.imageeditor.activity.controller.MainControllerPresenter.OPERATE_MOSAIC;
 import static com.uniquext.android.imageeditor.activity.controller.MainControllerPresenter.OPERATE_ROTATE;
 import static com.uniquext.android.imageeditor.activity.controller.MainControllerPresenter.OPERATE_TRIM;
+import static com.uniquext.android.imageeditor.activity.controller.MainControllerPresenter.OPERATE_TRANS;
 import static com.uniquext.android.imageeditor.helper.DrawableManager.EXIT;
 import static com.uniquext.android.imageeditor.helper.DrawableManager.SAVE;
 
@@ -66,6 +67,11 @@ public class MainControllerActivity extends AbstractMVPActivity<MainControllerPr
      */
     private TextView mTvTrim;
 
+    /**
+     * 透明度
+     */
+    private TextView mTvTans;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_controller;
@@ -87,6 +93,7 @@ public class MainControllerActivity extends AbstractMVPActivity<MainControllerPr
         this.mTvCharacters = findViewById(R.id.tv_characters);
         this.mTvMosaic = findViewById(R.id.tv_mosaic);
         this.mTvTrim = findViewById(R.id.tv_trim);
+        this.mTvTans = findViewById(R.id.tv_transparent);
     }
 
     @Override
@@ -111,6 +118,8 @@ public class MainControllerActivity extends AbstractMVPActivity<MainControllerPr
         mTvCharacters.setOnClickListener(v -> mPresenter.characters());
         mTvMosaic.setOnClickListener(v -> mPresenter.mosaic());
         mTvTrim.setOnClickListener(v -> mPresenter.trim());
+//点击透明度
+        mTvTans.setOnClickListener(v -> mPresenter.transparent());
     }
 
     @Override
@@ -167,15 +176,20 @@ public class MainControllerActivity extends AbstractMVPActivity<MainControllerPr
     public void showCharacters() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(OPERATE_CHARACTERS)));
     }
-
+    //显示透明度界面
     @Override
-    public void showMosaic() {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(OPERATE_MOSAIC)));
+    public void showTrans() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(OPERATE_TRANS)));
     }
 
     @Override
     public void showTrim() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(OPERATE_TRIM)));
+    }
+
+    @Override
+    public void showMosaic() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(OPERATE_MOSAIC)));
     }
 
     @Override

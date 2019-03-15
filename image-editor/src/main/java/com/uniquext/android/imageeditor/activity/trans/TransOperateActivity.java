@@ -1,4 +1,4 @@
-package com.uniquext.android.imageeditor.activity.transparent;
+package com.uniquext.android.imageeditor.activity.trans;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -50,10 +50,12 @@ public class TransOperateActivity extends AbstractMVPActivity<TransPresenter> im
     @Override
     protected void initView() {
         mTransView = findViewById(R.id.view_image_trans);
-        mSeekTrans= findViewById(R.id.seek_bar_rate);
+        mSeekTrans= findViewById(R.id.seek_bar_rate_trans);
+        mTvTransRate = findViewById(R.id.tv_rate_trans);
+
         mIvCancel = findViewById(R.id.iv_cancel);
         mIvConfirm = findViewById(R.id.iv_confirm);
-        mTvTransRate = findViewById(R.id.tv_rate);
+
     }
     @Override
     protected void initData(@Nullable Bundle savedInstanceState) {

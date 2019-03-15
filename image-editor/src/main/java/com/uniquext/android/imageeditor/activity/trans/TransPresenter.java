@@ -1,4 +1,4 @@
-package com.uniquext.android.imageeditor.activity.transparent;
+package com.uniquext.android.imageeditor.activity.trans;
 
 
 import android.graphics.Bitmap;
@@ -22,16 +22,11 @@ public class TransPresenter implements TransContract.Presenter{
         mContractView.detach();
     }
 
-
-
-
-
     @Override
     public void confirm(Bitmap bitmap) {
         DrawableManager.getInstance().pushBitmap(bitmap);
         mContractView.detach();
     }
-
 
     @Override
     public void start() {
