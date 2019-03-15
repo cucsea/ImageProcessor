@@ -3,6 +3,9 @@ package com.uniquext.android.imageeditor.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -11,15 +14,14 @@ import com.uniquext.android.imageeditor.util.ImageUtils;
 public class TransView extends AppCompatImageView {
 
     /**
+     * 图片
+     */
+    private Bitmap bitmap;
+    /**
      * 透明度
      */
     private float mRate = 1f;
 
-    /**
-     * 模糊度是否有变化
-     * 复用bitmap
-     */
-    private boolean mIsRateChanged = false;
 
 
     public TransView(Context context) {
@@ -32,25 +34,57 @@ public class TransView extends AppCompatImageView {
 
     public TransView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        float density = getContext().getResources().getDisplayMetrics().density;
+    }
+
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+        Matrix matrix = new Matrix();
+        matrix.reset();
+
+        // Paint
+        Paint vPaint = new Paint();
+        vPaint .setStyle( Paint.Style.STROKE ); //空心
+        vPaint .setAlpha( (int)mRate );
+
+        canvas.drawBitmap ( bitmap , matrix , vPaint );  //有透明
 
     }
 
 
     /**
-     * 设置模糊度
+     * 设置透明度
      *
-     * @param rate 模糊值
+     * @param rate 透明度值
      */
     public void setRate(float rate) {
-        mIsRateChanged = true;
-        this.mRate = rate * 0.1f;
+
+        this.mRate = rate*2.5f ;
         mRate = mRate <= 0 ? 0f : mRate;
-        mRate = mRate > 1 ? 1f : mRate;
+        mRate = mRate > 255 ? 255f : mRate;
+        invalidate();
     }
 
+    /**
+     * 获取修改透明度后的bitmap
+     *
+     * @return bitmap
+     */
     public Bitmap getTransBitmap() {
-        Bitmap bitmap = ImageUtils.View2Bitmap(this);
-        return bitmap;
+        Matrix matrix = new Matrix();
+        matrix.reset();
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    /**
+     * 设置图像
+     *
+     * @param bm 图像
+     */
+    public void setImageBitmap(Bitmap bm) {
+        this.bitmap = bm;
+        mRate = 1f;
+        invalidate();
     }
 }

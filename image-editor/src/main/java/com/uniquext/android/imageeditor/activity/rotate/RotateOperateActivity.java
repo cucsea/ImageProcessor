@@ -34,12 +34,6 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
     private AppCompatImageView mIvRotateRight;
 
     /**
-     * 旋转
-     */
-    private SeekBar mSeekRotateAngle = null;
-    //矩阵类,用于对图像进行旋转
-    private Matrix matrix = new Matrix();
-    /**
      * 取消
      */
     private AppCompatImageView mIvCancel;
@@ -61,9 +55,8 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
     @Override
     protected void initView() {
         mRotateView = findViewById(R.id.view_image_rotate);
-        mIvRotateLeft = findViewById(R.id.iv_rotate_left);//左右
+        mIvRotateLeft = findViewById(R.id.iv_rotate_left);
         mIvRotateRight = findViewById(R.id.iv_rotate_right);
-        mSeekRotateAngle = findViewById(R.id.seek_bar_angle);
         mIvCancel = findViewById(R.id.iv_cancel);
         mIvConfirm = findViewById(R.id.iv_confirm);
     }
