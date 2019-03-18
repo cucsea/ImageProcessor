@@ -97,9 +97,7 @@ public class TransView extends AppCompatImageView {
             RGBinfo = argb;
         }
         for (int i = 0; i < argb.length; i++) {
-            if (argb[i]!=0) {
-                argb[i] = ((mRate * 255 / 100) << 24) | (RGBinfo[i] & 0x00FFFFFF);    //将RGBinfo保存的RGB信息重新填入有透明度信息的数组中
-            }
+            argb[i] = ((mRate * 255 / 100) << 24) | (RGBinfo[i] & 0x00FFFFFF);    //将RGBinfo保存的RGB信息重新填入有透明度信息的数组中
         }
         bitmap = Bitmap.createBitmap(argb, bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
        // Log.d("hailong,trans", Integer.toString(mRate));
