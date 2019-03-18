@@ -24,6 +24,8 @@ public class TransView extends AppCompatImageView {
      */
     private static int mRate =100;
 
+    private static int[] RGBinfo;    //预先保存RGB的信息
+    private static Boolean first = false;  //标记是否第一次加载图片
 
     private float rotateDegree=0;
 
@@ -70,28 +72,37 @@ public class TransView extends AppCompatImageView {
 
         //第一种方法通过drawcanvas改变透明度
         // Paint
-        //Paint vPaint = new Paint();
+        Paint vPaint = new Paint();
         //vPaint .setStyle( Paint.Style.STROKE ); //空心
         //vPaint .setAlpha( (int)mRate );
-        canvas.drawBitmap ( bitmap, matrix , new Paint(0) );
+        //vPaint.setAlpha(mRate * 255 / 100);
+        canvas.drawBitmap ( bitmap, matrix ,vPaint );
+       // canvas.drawBitmap ( bitmap, matrix , new Paint(0) );
 
+      //  Log.d("hailong,trans,ondraw", Integer.toString(mRate));
     }
 
 
 
     public void setTransparentBitmap(){
 
+
         int[] argb = new int[bitmap.getWidth() * bitmap.getHeight()];
 
         bitmap.getPixels(argb, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());// 获得图片的ARGB值
 
+        //如果第一次加载图片，保存bitmap的RGB信息于RGBinfo数组中
+        if (first == false){
+            first = true;
+            RGBinfo = argb;
+        }
         for (int i = 0; i < argb.length; i++) {
-
-            argb[i] = ((mRate * 255 / 100)<< 24) | (argb[i] & 0x00FFFFFF);
-
+            if (argb[i]!=0) {
+                argb[i] = ((mRate * 255 / 100) << 24) | (RGBinfo[i] & 0x00FFFFFF);    //将RGBinfo保存的RGB信息重新填入有透明度信息的数组中
+            }
         }
         bitmap = Bitmap.createBitmap(argb, bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Log.d("Tag", Integer.toString(mRate));
+       // Log.d("hailong,trans", Integer.toString(mRate));
     }
 
 
@@ -127,7 +138,7 @@ public class TransView extends AppCompatImageView {
      */
     public void setImageBitmap(Bitmap bm) {
         this.bitmap = bm;
-        //int[] argb = new int[bitmap.getWidth() * bitmap.getHeight()];
+        //bitmap.getPixels(RGBinfo, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());// 获得图片的ARGB值
         //mRate = (argb[0]<< 24)/255*100;
         //Log.d("Tag", Integer.toString(mRate));
         invalidate();

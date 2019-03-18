@@ -1,9 +1,11 @@
 package com.uniquext.android.imageeditor.activity.trans;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -95,6 +97,7 @@ public class TransOperateActivity extends AbstractMVPActivity<TransPresenter> im
     @Override
     public void setRate(int progress) {
         mTransView.setRate(progress);
+
     }
 
     @Override
@@ -104,6 +107,7 @@ public class TransOperateActivity extends AbstractMVPActivity<TransPresenter> im
         mSeekTrans.setProgress( mTransView.getRate());
         mTvTransRate.setText(String.format(Locale.CHINA, "%d%%", mSeekTrans.getProgress()));
         setRate(mSeekTrans.getProgress());
+
 
     }
 
