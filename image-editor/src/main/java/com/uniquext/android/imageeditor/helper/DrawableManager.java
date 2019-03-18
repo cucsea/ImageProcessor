@@ -138,6 +138,8 @@ public final class DrawableManager {
             }
         }
         mCurrent = 0;
+        //修改不释放最后保存的结果，下次从这开始继续编辑
+        mSourceBitmap=current;
     }
 
     /**

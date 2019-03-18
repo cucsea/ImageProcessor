@@ -28,4 +28,7 @@
     <string name="input_characters">点击输入文字</string>
     <string name="input_hint">点击输入描述文字</string>
     <string name="complete">完成</string>
+
+    <string name="choose_img">选择图片</string>
+    <string name="edit_img">编辑图片</string>
 </resources>

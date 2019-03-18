@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void editImg(View v){
+
         DrawableManager.getInstance().init(editBm);
         startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse("scheme://com.uniquext.image-editor/main")), 1);
     }
@@ -82,8 +84,11 @@ public class MainActivity extends AppCompatActivity {
         switch(requestCode){
             case 1:
                 if (resultCode == DrawableManager.SAVE) {
-                    Bitmap bitmap = DrawableManager.getInstance().getDrawableBitmap();
-                    imageView.setImageBitmap(bitmap);
+                    //修改Bitmap的回收
+                    //Bitmap bitmap = DrawableManager.getInstance().getDrawableBitmap();
+                    editBm = DrawableManager.getInstance().getDrawableBitmap();
+                    imageView.setImageBitmap(editBm);
+
                 } else {
                     Toast.makeText(this, "没有保存", Toast.LENGTH_SHORT).show();
                 }
