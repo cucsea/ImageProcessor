@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
+
 import com.uniquext.android.imageeditor.util.ImageUtils;
 
 public class TransView extends AppCompatImageView {
@@ -20,8 +22,10 @@ public class TransView extends AppCompatImageView {
     /**
      * 透明度
      */
-    private float mRate = 1f;
+    private static int mRate =100;
 
+
+    private float rotateDegree=0;
 
 
     public TransView(Context context) {
@@ -40,16 +44,54 @@ public class TransView extends AppCompatImageView {
     @Override
     protected void onDraw(Canvas canvas) {
 
+        float widthView = getWidth();
+        float heightView = getHeight();
+        float widthBitmap = bitmap.getWidth();
+        float heightBitmap = bitmap.getHeight();
+
+        float scaleX, scaleY, scale;
+
+        if (rotateDegree % 180 == 0) {
+            scaleX = widthView / widthBitmap;
+            scaleY = heightView / heightBitmap;
+        } else {
+            scaleX = widthView / heightBitmap;
+            scaleY = heightView / widthBitmap;
+        }
+
+        scale = Math.min(scaleX, scaleY);
+        float offsetX = (widthView - widthBitmap * scale) * 0.5f;
+        float offsetY = (heightView - heightBitmap * scale) * 0.5f;
+
+        canvas.rotate(rotateDegree , getWidth() * 0.5f, getHeight() * 0.5f);
+        canvas.translate(offsetX, offsetY);
         Matrix matrix = new Matrix();
-        matrix.reset();
+        matrix.setScale(scale, scale);
 
+        //第一种方法通过drawcanvas改变透明度
         // Paint
-        Paint vPaint = new Paint();
-        vPaint .setStyle( Paint.Style.STROKE ); //空心
-        vPaint .setAlpha( (int)mRate );
+        //Paint vPaint = new Paint();
+        //vPaint .setStyle( Paint.Style.STROKE ); //空心
+        //vPaint .setAlpha( (int)mRate );
+        canvas.drawBitmap ( bitmap, matrix , new Paint(0) );
 
-        canvas.drawBitmap ( bitmap , matrix , vPaint );  //有透明
+    }
 
+
+
+    public void setTransparentBitmap(){
+
+        int[] argb = new int[bitmap.getWidth() * bitmap.getHeight()];
+
+        bitmap.getPixels(argb, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());// 获得图片的ARGB值
+
+        for (int i = 0; i < argb.length; i++) {
+
+            argb[i] = ((mRate * 255 / 100)<< 24) | (argb[i] & 0x00FFFFFF);
+
+        }
+        bitmap = Bitmap.createBitmap(argb, bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Log.d("Tag", Integer.toString(mRate));
     }
 
 
@@ -58,11 +100,11 @@ public class TransView extends AppCompatImageView {
      *
      * @param rate 透明度值
      */
-    public void setRate(float rate) {
-
-        this.mRate = rate*2.5f ;
-        mRate = mRate <= 0 ? 0f : mRate;
-        mRate = mRate > 255 ? 255f : mRate;
+    public void setRate(int  rate) {
+        mRate = rate ;
+        mRate = mRate <= 0 ? 0:mRate;
+        mRate = mRate >=100 ? 100: mRate;
+        setTransparentBitmap();
         invalidate();
     }
 
@@ -74,17 +116,26 @@ public class TransView extends AppCompatImageView {
     public Bitmap getTransBitmap() {
         Matrix matrix = new Matrix();
         matrix.reset();
+        matrix.setRotate(rotateDegree);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     /**
-     * 设置图像
+     * 设置图像,需要知道当前图像的透明度值
      *
      * @param bm 图像
      */
     public void setImageBitmap(Bitmap bm) {
         this.bitmap = bm;
-        mRate = 1f;
+        //int[] argb = new int[bitmap.getWidth() * bitmap.getHeight()];
+        //mRate = (argb[0]<< 24)/255*100;
+        //Log.d("Tag", Integer.toString(mRate));
         invalidate();
+    }
+
+
+    public int getRate()
+    {
+        return mRate;
     }
 }

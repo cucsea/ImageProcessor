@@ -72,8 +72,9 @@ public class TransOperateActivity extends AbstractMVPActivity<TransPresenter> im
         mSeekTrans.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //图片透明度改变（canvas）
                 mTvTransRate.setText(String.format(Locale.CHINA, "%d%%", progress));
-                //图片透明度改变
+                setRate(seekBar.getProgress());
 
             }
 
@@ -84,7 +85,7 @@ public class TransOperateActivity extends AbstractMVPActivity<TransPresenter> im
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                setRate(seekBar.getProgress());
+
             }
         });
 
@@ -92,14 +93,15 @@ public class TransOperateActivity extends AbstractMVPActivity<TransPresenter> im
     }
 
     @Override
-    public void setRate(float progress) {
+    public void setRate(int progress) {
         mTransView.setRate(progress);
     }
 
     @Override
     public void init() {
+        //设置初始图像、透明度
         mTransView.setImageBitmap(DrawableManager.getInstance().getDrawableBitmap());
-        mSeekTrans.setProgress(100);
+        mSeekTrans.setProgress( mTransView.getRate());
         mTvTransRate.setText(String.format(Locale.CHINA, "%d%%", mSeekTrans.getProgress()));
         setRate(mSeekTrans.getProgress());
 

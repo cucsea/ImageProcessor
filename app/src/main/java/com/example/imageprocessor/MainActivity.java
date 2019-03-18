@@ -32,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = findViewById(R.id.image_view);
-        imageView.setImageResource(R.drawable.picture);
-        editBm = BitmapFactory.decodeResource(getResources(), R.drawable.picture);
+        imageView.setImageResource(R.drawable.test);
+        editBm = BitmapFactory.decodeResource(getResources(), R.drawable.test);
 
     }
+
 
     public void chooseImg(View v){
 

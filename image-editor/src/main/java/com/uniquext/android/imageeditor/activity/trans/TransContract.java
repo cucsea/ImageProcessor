@@ -20,7 +20,7 @@ public interface TransContract {
          *
          * @param progress 透明度值
          */
-        void setRate(float progress);
+        void setRate(int progress);
 
     }
 
