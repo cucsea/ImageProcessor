@@ -9,9 +9,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.Log;
 
-import com.uniquext.android.imageeditor.util.ImageUtils;
 
 public class TransView extends AppCompatImageView {
 
@@ -24,9 +22,7 @@ public class TransView extends AppCompatImageView {
      */
     private static int mRate =100;
 
-    private static int[] RGBinfo;    //预先保存RGB的信息
-    private static Boolean first = false;  //标记是否第一次加载图片
-
+    private int[] mRgb;    //预先保存RGB的信息
     private float rotateDegree=0;
 
 
@@ -85,19 +81,16 @@ public class TransView extends AppCompatImageView {
 
 
     public void setTransparentBitmap(){
-
-
         int[] argb = new int[bitmap.getWidth() * bitmap.getHeight()];
-
         bitmap.getPixels(argb, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());// 获得图片的ARGB值
-
         //如果第一次加载图片，保存bitmap的RGB信息于RGBinfo数组中
-        if (first == false){
-            first = true;
-            RGBinfo = argb;
-        }
+        //if (first == false){
+           // first = true;
+            //RGBinfo = argb;
+        //}
         for (int i = 0; i < argb.length; i++) {
-            argb[i] = ((mRate * 255 / 100) << 24) | (RGBinfo[i] & 0x00FFFFFF);    //将RGBinfo保存的RGB信息重新填入有透明度信息的数组中
+            if(mRgb[i]!=0)
+            argb[i] = ((mRate * 255 / 100) << 24) | (mRgb[i] & 0x00FFFFFF);    //将RGBinfo保存的RGB信息重新填入有透明度信息的数组中
         }
         bitmap = Bitmap.createBitmap(argb, bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
        // Log.d("hailong,trans", Integer.toString(mRate));
@@ -136,9 +129,8 @@ public class TransView extends AppCompatImageView {
      */
     public void setImageBitmap(Bitmap bm) {
         this.bitmap = bm;
-        //bitmap.getPixels(RGBinfo, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());// 获得图片的ARGB值
-        //mRate = (argb[0]<< 24)/255*100;
-        //Log.d("Tag", Integer.toString(mRate));
+        mRgb = new int[bitmap.getWidth() * bitmap.getHeight()];
+        bitmap.getPixels(mRgb, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());// 获得图片的ARGB值;
         invalidate();
     }
 
