@@ -37,11 +37,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
         android:text="@string/trans_rank"
         android:textColor="@color/text_default_color"
         android:textSize="13sp"

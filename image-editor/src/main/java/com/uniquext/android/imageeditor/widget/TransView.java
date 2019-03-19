@@ -104,7 +104,7 @@ public class TransView extends AppCompatImageView {
      */
     public void setRate(int  rate) {
         mRate = rate ;
-        mRate = mRate <= 0 ? 0:mRate;
+        mRate = mRate <= 5? 5:mRate;
         mRate = mRate >=100 ? 100: mRate;
         setTransparentBitmap();
         invalidate();
