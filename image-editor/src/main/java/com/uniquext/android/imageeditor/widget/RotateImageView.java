@@ -98,9 +98,6 @@ public class RotateImageView extends View {
      * 右旋
      */
     public void rotateRight() {
-        //不按当前的角度进行计算
-        //rotateDegree = (rotateDegree + 90) % 360;
-        rotateDegree =testAngle( rotateDegree);
         rotateDegree = (rotateDegree + 90) % 360;
         invalidate();
     }
@@ -113,17 +110,4 @@ public class RotateImageView extends View {
         invalidate();
     }
 
-    float testAngle(float curAngle)
-    {
-        if(curAngle>=0&&curAngle<90)
-        {
-            return 0;
-        }else if(curAngle>=90&&curAngle<180)
-        {
-            return 90;
-        }else if(curAngle>=180&&curAngle<270)
-        {
-            return 180;
-        }else{ return 270;}
-    }
 }

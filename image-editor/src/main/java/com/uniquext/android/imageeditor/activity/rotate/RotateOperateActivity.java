@@ -91,7 +91,6 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
         mSeekBarAngle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //图片角度改变（canvas）
                 mAngle = progress*3.6f;
                 mAngle = Math.round(mAngle);
                 mTextAngle.setText(mAngle+"°");
@@ -129,11 +128,20 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
     @Override
     public void rotateLeft() {
         mRotateView.rotateLeft();
+        //需要更新滑动条的显示
+        mAngle=(mAngle-90)%360;
+        mAngle=mAngle<0?mAngle+360:mAngle;
+        mSeekBarAngle.setProgress((int)(mAngle/3.6f));
+        mTextAngle.setText(mAngle+"°");
     }
 
     @Override
     public void rotateRight() {
         mRotateView.rotateRight();
+        //需要更新滑动条的显示
+        mAngle=(mAngle+90)%360;
+        mSeekBarAngle.setProgress((int)(mAngle/3.6f));
+        mTextAngle.setText(mAngle+"°");
     }
 
     @Override
