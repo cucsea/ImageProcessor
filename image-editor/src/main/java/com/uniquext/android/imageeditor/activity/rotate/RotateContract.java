@@ -27,7 +27,7 @@ public interface RotateContract {
         /**
          * 任意角度
          */
-        void rotateAngle(float angle);
+        void rotateAngle(int angle);
 
     }
 
@@ -49,7 +49,7 @@ public interface RotateContract {
         /**
          * 任意角度
          */
-        void rotate(float angle);
+        void rotate(int angle);
 
         /**
          * 取消

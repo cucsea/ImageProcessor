@@ -71,7 +71,7 @@ public class MosaicView extends AppCompatImageView {
      */
     private Bitmap mSourceBitmap = null;
     /**
-     * 马赛克改变监听
+     * 路径图改变监听
      */
     private OnMosaicChangeListener mMosaicChangeListener = null;
     /**
@@ -239,7 +239,7 @@ public class MosaicView extends AppCompatImageView {
         canvas.drawPath(drawablePath.path, drawablePath.paint);
         //drawablePath.paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         //修改图层混合模式,绘制在上层
-        drawablePath.paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+        drawablePath.paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
         canvas.drawBitmap(drawablePath.mosaic, getImageMatrix(), drawablePath.paint);
         drawablePath.paint.setXfermode(null);
         canvas.restoreToCount(layerId);

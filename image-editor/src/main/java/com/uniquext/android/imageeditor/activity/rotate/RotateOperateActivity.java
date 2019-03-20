@@ -44,7 +44,7 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
      * 角度显示
      */
     private TextView mTextAngle;
-    private float mAngle = 0 ;
+    private int mAngle = 0 ;
     /**
      * 取消
      */
@@ -91,8 +91,8 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
         mSeekBarAngle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mAngle = progress*3.6f;
-                mAngle = Math.round(mAngle);
+                mAngle = progress;
+                //mAngle = Math.round(mAngle);
                 mTextAngle.setText(mAngle+"°");
                 rotateAngle(mAngle);
 
@@ -131,7 +131,7 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
         //需要更新滑动条的显示
         mAngle=(mAngle-90)%360;
         mAngle=mAngle<0?mAngle+360:mAngle;
-        mSeekBarAngle.setProgress((int)(mAngle/3.6f));
+        mSeekBarAngle.setProgress(mAngle);
         mTextAngle.setText(mAngle+"°");
     }
 
@@ -140,12 +140,12 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
         mRotateView.rotateRight();
         //需要更新滑动条的显示
         mAngle=(mAngle+90)%360;
-        mSeekBarAngle.setProgress((int)(mAngle/3.6f));
+        mSeekBarAngle.setProgress(mAngle);
         mTextAngle.setText(mAngle+"°");
     }
 
     @Override
-    public void rotateAngle(float angle) {
+    public void rotateAngle(int angle) {
         mRotateView.rotateAngle(angle);
     }
 }

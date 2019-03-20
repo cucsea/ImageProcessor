@@ -23,7 +23,7 @@ public class RotateImageView extends View {
     /**
      * 旋转角度
      */
-    private float rotateDegree = 0;
+    private int rotateDegree = 0;
 
     public RotateImageView(Context context) {
         super(context);
@@ -109,7 +109,7 @@ public class RotateImageView extends View {
     /**
      * 任意角度旋转
      */
-    public void rotateAngle(float angle) {
+    public void rotateAngle(int angle) {
         rotateDegree = angle;
         invalidate();
     }

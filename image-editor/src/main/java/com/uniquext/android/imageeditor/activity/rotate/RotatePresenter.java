@@ -42,7 +42,7 @@ public class RotatePresenter implements RotateContract.Presenter {
     }
 
     @Override
-    public void rotate(float angle){
+    public void rotate(int angle){
         mContractView.rotateAngle(angle);
     }
 
