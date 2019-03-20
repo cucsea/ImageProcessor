@@ -6,10 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.widget.SeekBar;
 import android.graphics.Matrix;
+import android.widget.TextView;
+
 import com.uniquext.android.imageeditor.R;
 import com.uniquext.android.imageeditor.core.AbstractMVPActivity;
 import com.uniquext.android.imageeditor.helper.DrawableManager;
 import com.uniquext.android.imageeditor.widget.RotateImageView;
+
+import java.util.Locale;
 
 /**
  * @author penghaitao
@@ -32,7 +36,15 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
      * 右转
      */
     private AppCompatImageView mIvRotateRight;
-
+    /**
+     * 滑动条
+     */
+    private SeekBar mSeekBarAngle;
+    /**
+     * 角度显示
+     */
+    private TextView mTextAngle;
+    private float mAngle;
     /**
      * 取消
      */
@@ -59,6 +71,9 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
         mIvRotateRight = findViewById(R.id.iv_rotate_right);
         mIvCancel = findViewById(R.id.iv_cancel);
         mIvConfirm = findViewById(R.id.iv_confirm);
+        //任意角度旋转
+        mSeekBarAngle = findViewById(R.id.seek_bar_angle);
+        mTextAngle=findViewById(R.id.rotate_end);
     }
 
     @Override
@@ -72,7 +87,27 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
         mIvRotateRight.setOnClickListener(v -> mPresenter.right());
         mIvCancel.setOnClickListener(v -> mPresenter.cancel());
         mIvConfirm.setOnClickListener(v -> mPresenter.confirm(mRotateView.getImageBitmap()));
+        //任意角度旋转
+        mSeekBarAngle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //图片角度改变（canvas）
+                mAngle = progress*3.6f;
+                mAngle = Math.round(mAngle);
+                mTextAngle.setText(mAngle+"°");
+                rotateAngle(mAngle);
 
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
 
     }
 
@@ -99,5 +134,10 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
     @Override
     public void rotateRight() {
         mRotateView.rotateRight();
+    }
+
+    @Override
+    public void rotateAngle(float angle) {
+        mRotateView.rotateAngle(angle);
     }
 }

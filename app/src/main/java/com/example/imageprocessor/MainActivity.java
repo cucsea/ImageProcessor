@@ -17,7 +17,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = findViewById(R.id.image_view);
-        imageView.setImageResource(R.drawable.test_1);
-        editBm = BitmapFactory.decodeResource(getResources(), R.drawable.test_1);
+        imageView.setImageResource(R.drawable.test);
+        editBm = BitmapFactory.decodeResource(getResources(), R.drawable.test);
 
     }
 

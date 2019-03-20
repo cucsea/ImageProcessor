@@ -24,6 +24,10 @@ public interface RotateContract {
          * 右旋
          */
         void rotateRight();
+        /**
+         * 任意角度
+         */
+        void rotateAngle(float angle);
 
     }
 
@@ -41,6 +45,11 @@ public interface RotateContract {
          * 右旋
          */
         void right();
+
+        /**
+         * 任意角度
+         */
+        void rotate(float angle);
 
         /**
          * 取消
