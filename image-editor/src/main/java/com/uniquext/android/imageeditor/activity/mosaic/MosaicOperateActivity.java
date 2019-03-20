@@ -31,17 +31,11 @@ public class MosaicOperateActivity extends AbstractMVPActivity<MosaicPresenter> 
      */
     private SeekBar mSeekWidth;
     /**
-     * 模糊度
-     */
-    private SeekBar mSeekMosaic;
-    /**
      * 撤销
      */
     private AppCompatImageView mIvRevoke;
-    /**
-     * 模糊值
-     */
-    private TextView mTvMosaicRate;
+
+
     /**
      * 取消
      */
@@ -66,8 +60,7 @@ public class MosaicOperateActivity extends AbstractMVPActivity<MosaicPresenter> 
     protected void initView() {
         mMosaicView = findViewById(R.id.view_image_mosaic);
         mSeekWidth = findViewById(R.id.seek_bar_brush);
-        mSeekMosaic = findViewById(R.id.seek_bar_rate);
-        mTvMosaicRate = findViewById(R.id.tv_rate);
+
         mIvRevoke = findViewById(R.id.iv_revoke);
         mIvCancel = findViewById(R.id.iv_cancel);
         mIvConfirm = findViewById(R.id.iv_confirm);
@@ -102,31 +95,14 @@ public class MosaicOperateActivity extends AbstractMVPActivity<MosaicPresenter> 
                 setBrushWidth(seekBar.getProgress() / 100f);
             }
         });
-        mSeekMosaic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mTvMosaicRate.setText(String.format(Locale.CHINA, "%d%%", progress));
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                setRate(seekBar.getProgress());
-            }
-        });
     }
 
     @Override
     public void init() {
+        //只需要画笔宽度
         mMosaicView.setImageBitmap(DrawableManager.getInstance().getDrawableBitmap());
-        mSeekMosaic.setProgress(50);
         mSeekWidth.setProgress(50);
-        mTvMosaicRate.setText(String.format(Locale.CHINA, "%d%%", mSeekMosaic.getProgress()));
-        setRate(mSeekMosaic.getProgress());
         setBrushWidth(mSeekWidth.getProgress() / 100f);
     }
 
@@ -150,11 +126,6 @@ public class MosaicOperateActivity extends AbstractMVPActivity<MosaicPresenter> 
         mIvRevoke.setImageResource(R.mipmap.icon_revoke_unable);
     }
 
-
-    @Override
-    public void setRate(float progress) {
-        mMosaicView.setRate(progress);
-    }
 
     @Override
     public void setBrushWidth(float progress) {

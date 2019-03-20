@@ -41,8 +41,12 @@ public class RotateImageView extends View {
     protected void onDraw(Canvas canvas) {
         float widthView = getWidth();
         float heightView = getHeight();
-        float widthBitmap = bitmap.getWidth();
-        float heightBitmap = bitmap.getHeight();
+        float widthBitmap = widthView;
+        float heightBitmap = heightView;
+        if(bitmap != null){
+            widthBitmap = bitmap.getWidth();
+            heightBitmap = bitmap.getHeight();
+        }
 
         float scaleX, scaleY, scale;
         if (rotateDegree % 180 == 0) {

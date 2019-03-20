@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -38,20 +39,21 @@ public class MosaicView extends AppCompatImageView {
     /**
      * 轨迹点颜色值
      */
-    private static final int BRUSH_BORDER_COLOR = 0xFFFFFFFF;
+    private static final int BRUSH_BORDER_COLOR = 0xffff2846;
     /**
      * 画笔宽度
      */
     private float mBrushWidth = 1f;
     /**
-     * 模糊度
-     */
-    private float mRate = 1f;
-
-    /**
      * 显示区域
      */
     private RectF mDrawableRectF = new RectF();
+
+    /**
+     * 起始点触摸点
+     */
+    private PointF mStartPointer = new PointF();
+
     /**
      * 最后一个触摸点
      */
@@ -68,11 +70,6 @@ public class MosaicView extends AppCompatImageView {
      * 原始资源图
      */
     private Bitmap mSourceBitmap = null;
-    /**
-     * 模糊度是否有变化
-     * 复用bitmap
-     */
-    private boolean mIsRateChanged = false;
     /**
      * 马赛克改变监听
      */
@@ -159,6 +156,7 @@ public class MosaicView extends AppCompatImageView {
         if (mDrawableRectF.contains(event.getX(), event.getY())) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    mStartPointer.set(event.getX(), event.getY());
                     mCurrentPath = new DrawablePath();
                     mCurrentPath.path.moveTo(event.getX(), event.getY());
                     break;
@@ -167,6 +165,7 @@ public class MosaicView extends AppCompatImageView {
                     postInvalidate();
                     break;
                 case MotionEvent.ACTION_UP:
+                    mCurrentPath.path.lineTo(event.getX(), event.getY());
                     postInvalidate();
                     mDrawablePathStack.push(mCurrentPath);
                     mMosaicChangeListener.onChanged(mDrawablePathStack.size());
@@ -208,9 +207,9 @@ public class MosaicView extends AppCompatImageView {
     }
 
     /**
-     * 获取马赛克图层
+     * 获取画笔图层
      *
-     * @return 马赛克图层
+     * @return 画笔图层
      */
     private Bitmap getMosaicLayer() {
         Bitmap bitmap =
@@ -218,18 +217,19 @@ public class MosaicView extends AppCompatImageView {
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(mSourceBitmap, new Matrix(), null);
         RenderScript rs = RenderScript.create(getContext());
+        //不要模糊处理
         Allocation overlayAlloc = Allocation.createFromBitmap(rs, bitmap);
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, overlayAlloc.getElement());
-        blur.setInput(overlayAlloc);
+       // ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, overlayAlloc.getElement());
+       // blur.setInput(overlayAlloc);
         //Radius out of range (0 < r <= 25).
-        blur.setRadius(mRate);
-        blur.forEach(overlayAlloc);
+       // blur.setRadius(mRate);
+       // blur.forEach(overlayAlloc);
         overlayAlloc.copyTo(bitmap);
         return bitmap;
     }
 
     /**
-     * 绘制马赛克路径图
+     * 绘制路径图
      *
      * @param canvas       画布
      * @param drawablePath 画笔路径
@@ -237,7 +237,9 @@ public class MosaicView extends AppCompatImageView {
     private void drawMosaicPath(Canvas canvas, DrawablePath drawablePath) {
         int layerId = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, ALL_SAVE_FLAG);
         canvas.drawPath(drawablePath.path, drawablePath.paint);
-        drawablePath.paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        //drawablePath.paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        //修改图层混合模式,绘制在上层
+        drawablePath.paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
         canvas.drawBitmap(drawablePath.mosaic, getImageMatrix(), drawablePath.paint);
         drawablePath.paint.setXfermode(null);
         canvas.restoreToCount(layerId);
@@ -256,9 +258,9 @@ public class MosaicView extends AppCompatImageView {
     }
 
     /**
-     * 获取模糊图
+     * 获取路径图
      *
-     * @return 局部模糊图
+     * @return 局部路径图
      */
     public Bitmap getMosaicBitmap() {
         mIsHiddenBrush = true;
@@ -271,17 +273,7 @@ public class MosaicView extends AppCompatImageView {
         return Bitmap.createBitmap(bitmap, left, top, right - left, bottom - top, null, false);
     }
 
-    /**
-     * 设置模糊度
-     *
-     * @param rate 模糊值
-     */
-    public void setRate(float rate) {
-        mIsRateChanged = true;
-        this.mRate = rate * 0.25f;
-        mRate = mRate <= 0 ? 1f : mRate;
-        mRate = mRate > 25 ? 25f : mRate;
-    }
+
 
     /**
      * 设置画笔粗细并更新画布
@@ -298,7 +290,7 @@ public class MosaicView extends AppCompatImageView {
     }
 
     /**
-     * 马赛克变动监听
+     * 变动监听
      */
     public interface OnMosaicChangeListener {
         /**
@@ -322,7 +314,7 @@ public class MosaicView extends AppCompatImageView {
          */
         Paint paint = new Paint();
         /**
-         * 马赛克图
+         * 路径图层
          */
         Bitmap mosaic;
 
@@ -330,10 +322,10 @@ public class MosaicView extends AppCompatImageView {
             paint.setStrokeCap(Paint.Cap.ROUND);
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(mBrushWidth);
+            paint.setColor(Color.RED);
 
-            if (mIsRateChanged || mDrawablePathStack.isEmpty()) {
+            if (mDrawablePathStack.isEmpty()) {
                 mosaic = getMosaicLayer();
-                mIsRateChanged = false;
             } else {
                 mosaic = mDrawablePathStack.peek().mosaic;
             }

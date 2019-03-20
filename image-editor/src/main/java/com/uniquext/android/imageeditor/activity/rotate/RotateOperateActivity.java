@@ -44,7 +44,7 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
      * 角度显示
      */
     private TextView mTextAngle;
-    private float mAngle;
+    private float mAngle = 0 ;
     /**
      * 取消
      */

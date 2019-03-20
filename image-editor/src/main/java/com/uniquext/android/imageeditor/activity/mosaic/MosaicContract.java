@@ -25,12 +25,6 @@ public interface MosaicContract {
          */
         void showUnRevoke();
 
-        /**
-         * 设置硬度
-         *
-         * @param progress 进度
-         */
-        void setRate(float progress);
 
         /**
          * 设置画笔宽度

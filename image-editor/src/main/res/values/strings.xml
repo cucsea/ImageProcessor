@@ -7,7 +7,7 @@
 
     <string name="rotate">旋转</string>
     <string name="characters">文字</string>
-    <string name="mosaic">模糊</string>
+    <string name="mosaic">画线</string>
     <string name="trim">裁剪</string>
     <string name="trans_rank">透明度</string>
 
@@ -17,7 +17,6 @@
     <string name="rotate_rate_3">16:9</string>
 
     <string name="mosaic_brush">画笔</string>
-    <string name="mosaic_rank">硬度</string>
 
     <string name="percent_empty">0</string>
     <string name="percent_full">100%</string>
