@@ -16,7 +16,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.renderscript.Allocation;
 import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -53,6 +52,10 @@ public class MosaicView extends AppCompatImageView {
      * 起始点触摸点
      */
     private PointF mStartPointer = new PointF();
+    /**
+     * 结束点触摸点
+     */
+    private PointF mEndPointer = new PointF();
 
     /**
      * 最后一个触摸点
@@ -161,11 +164,11 @@ public class MosaicView extends AppCompatImageView {
                     mCurrentPath.path.moveTo(event.getX(), event.getY());
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    mEndPointer.set(event.getX(), event.getY());
                     mCurrentPath.path.lineTo(event.getX(), event.getY());
                     postInvalidate();
                     break;
                 case MotionEvent.ACTION_UP:
-                    mCurrentPath.path.lineTo(event.getX(), event.getY());
                     postInvalidate();
                     mDrawablePathStack.push(mCurrentPath);
                     mMosaicChangeListener.onChanged(mDrawablePathStack.size());

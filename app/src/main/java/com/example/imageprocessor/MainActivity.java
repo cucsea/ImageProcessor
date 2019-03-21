@@ -24,13 +24,12 @@ import com.uniquext.android.imageeditor.helper.DrawableManager;
 public class MainActivity extends AppCompatActivity {
 
     private AppCompatImageView imageView;
-    Bitmap editBm;
+    Bitmap editBm = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         imageView = findViewById(R.id.image_view);
         imageView.setImageResource(R.drawable.test);
         editBm = BitmapFactory.decodeResource(getResources(), R.drawable.test);
