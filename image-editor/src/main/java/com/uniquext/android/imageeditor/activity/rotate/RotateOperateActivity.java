@@ -6,11 +6,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.DrawableWrapper;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.graphics.Matrix;
@@ -141,23 +144,48 @@ public class RotateOperateActivity extends AbstractMVPActivity<RotatePresenter> 
                 Bitmap tmpBitmap = Bitmap.createBitmap(viewWidth,viewHeight,copyBitmap.getConfig());
                 Paint mPaint = new Paint();
                 mPaint.setColor(Color.GRAY);        //颜色
-                mPaint.setStrokeWidth(2);         //设置线条宽度
+                mPaint.setStrokeWidth(5);         //设置线条宽度
                 mPaint.setAntiAlias(true);          //抗锯齿
-                mPaint.setAlpha(50);                //透明度
+                mPaint.setAlpha(80);                //透明度
                 Canvas canvas = new Canvas(tmpBitmap);
                 /*画竖线*/
-                //canvas.drawLine(viewWidth/2,0,viewWidth/2,viewHeight,mPaint);
+                canvas.drawLine(viewWidth/2,0,viewWidth/2,viewHeight,mPaint);
                 //画5条竖线
+                /*
                 for(int i = 0; i< 5 ; i++){
                     canvas.drawLine(viewWidth* i/5,0,viewWidth* i/5,viewHeight,mPaint);
-                }
+                }*/
                 /*画横线*/
-                //canvas.drawLine(0,viewHeight/2,viewWidth,viewHeight/2,mPaint);
+                canvas.drawLine(0,viewHeight/2,viewWidth,viewHeight/2,mPaint);
                 // 画6条横线
+                /*
                 for(int j = 0; j < 6; j++){
                     canvas.drawLine(0,viewHeight*j/6,viewWidth,viewHeight*j/6,mPaint);
-                }
+                }*/
                 mRotateViewCopy.setImageBitmap(tmpBitmap);
+                View.OnTouchListener tmpTouchListener = new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch(event.getAction()){
+                            case MotionEvent.ACTION_DOWN:
+                                canvas.drawColor(0, PorterDuff.Mode.CLEAR);//清除之前的画线
+                                canvas.drawLine(event.getX(),0,event.getX(),viewHeight,mPaint);//画竖线
+                                canvas.drawLine(0,event.getY(),viewWidth,event.getY(),mPaint);//画横线
+                                mRotateViewCopy.setImageBitmap(tmpBitmap);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                canvas.drawColor(0, PorterDuff.Mode.CLEAR);
+                                canvas.drawLine(event.getX(),0,event.getX(),viewHeight,mPaint);
+                                canvas.drawLine(0,event.getY(),viewWidth,event.getY(),mPaint);
+                                mRotateViewCopy.setImageBitmap(tmpBitmap);
+                                break;
+                        }
+                        return true;
+                    }
+                };
+                mRotateViewCopy.setOnTouchListener(tmpTouchListener);
             }
         },100);
     }
