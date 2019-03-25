@@ -3,6 +3,7 @@ package com.uniquext.android.imageeditor.core;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 /**
  * @param <T> 支持者
@@ -26,6 +27,7 @@ public abstract class AbstractMVPActivity<T extends BaseContract.BasePresenter> 
         initView();
         initData(savedInstanceState);
         initEvent();
+
     }
 
     @Override

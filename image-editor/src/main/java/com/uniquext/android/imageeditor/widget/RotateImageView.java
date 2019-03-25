@@ -3,6 +3,7 @@ package com.uniquext.android.imageeditor.widget;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -59,12 +60,19 @@ public class RotateImageView extends View {
         scale = Math.min(scaleX, scaleY);
         float offsetX = (widthView - widthBitmap * scale) * 0.5f;
         float offsetY = (heightView - heightBitmap * scale) * 0.5f;
-
         canvas.rotate(rotateDegree, getWidth() * 0.5f, getHeight() * 0.5f);
         canvas.translate(offsetX, offsetY);
+        Paint mPaint = new Paint();
+        /*
+        Paint testPaint = new Paint();
+        testPaint.setColor(Color.RED);
+        testPaint.setStrokeWidth(5);
+        testPaint.setAntiAlias(true);
+        */
         Matrix matrix = new Matrix();
         matrix.setScale(scale, scale);
-        canvas.drawBitmap(bitmap, matrix, new Paint());
+        canvas.drawBitmap(bitmap, matrix, mPaint);
+       // canvas.drawLine(50,60,400,400,testPaint);
     }
 
     /**
